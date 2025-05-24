@@ -8,7 +8,7 @@ if (!isset($_SESSION["user_id"])) {
     exit();
 }
 
-$sql = "SELECT * FROM users";
+$sql = "SELECT * FROM workers";
 $query = mysqli_query($conn, $sql);
 
 
@@ -348,47 +348,28 @@ $query = mysqli_query($conn, $sql);
 
                         </ul>
                     </li>
+                    <li class="header">Workers</li>
                     <li class="treeview">
-                        <a href="#">
+                        <a href="addworker.php">
                             <i class="fa fa-files-o"></i>
-                            <span>Users</span>
-
-                        </a>
-                        <ul class="treeview-menu">
-
-                            <li><a href="users.php"><i class="fa fa-circle-o"></i>List users</a>
-                            </li>
-                            <li><a href="editusers.php"><i class="fa fa-circle-o"></i>Edit users</a>
-                            </li>
-                            <li><a href="userdepo.php"><i class="fa fa-circle-o"></i>User Transactions</a></li>
-                            <li><a href="userdepo.php"><i class="fa fa-circle-o"></i>User Payments</a></li>
-                            <li><a href="bankwith.php"><i class="fa fa-circle-o"></i>Bank Withdrawals</a></li>
-                            <li><a href="cryptowith.php"><i class="fa fa-circle-o"></i>Crypto Withdrawals</a></li>
-                            <li><a href="userkyc.php"><i class="fa fa-circle-o"></i>Users KYC</a></li>
-
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="addProfit.php">
-                            <i class="fa fa-files-o"></i>
-                            <span>Add Profit</span>
+                            <span>Add Workers</span>
 
                         </a>
                     </li>
                     <li class="treeview">
-                        <a href="addDeposit.php">
+                        <a href="listworkers.php">
                             <i class="fa fa-files-o"></i>
-                            <span>Add Deposit</span>
+                            <span>List Workers</span>
 
                         </a>
                     </li>
-                    <li class="treeview">
-                        <a href="addBonus.php">
+                    <!-- <li class="treeview">
+                        <a href="editworker.php">
                             <i class="fa fa-files-o"></i>
-                            <span>Add Bonus</span>
+                            <span>Edit Workers</span>
 
                         </a>
-                    </li>
+                    </li> -->
 
 
                 </ul>

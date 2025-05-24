@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("../dashboard/includes/connection.php");
+include("../connection.php");
 if (isset($_POST['login'])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
@@ -67,7 +67,7 @@ if (isset($_POST['login'])) {
 <body class="login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="index2.html"><b>Coinstarinvest Admin</b></a>
+            <a href="index2.html"><b>Subsea Admin</b></a>
         </div><!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">Sign in to start your session</p>
