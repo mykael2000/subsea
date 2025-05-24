@@ -1,292 +1,250 @@
-<?php 
-include("includes/header.php");
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
-
-//Load Composer's autoloader
-
-require '../PHPMailer-master/src/PHPMailer.php';
-require '../PHPMailer-master/src/Exception.php';
-require '../PHPMailer-master/src/SMTP.php';
-//Create an instance; passing `true` enables exceptions
-$mail = new PHPMailer(true);
- 
-
-// SQL query to get the total number of users
-$sqlt = "SELECT COUNT(*) as total_users FROM users";
-
-// Execute the query
-$result = mysqli_query($conn, $sqlt);
-
-if ($result) {
-    // Fetch the result as an associative array
-    $row = mysqli_fetch_assoc($result);
-
-    // Get the total number of users
-    $totalUsers = $row['total_users'];
-
-    // Output the total number of users
-    
-} else {
-    // Handle the query error
-    echo "Error: " . mysqli_error($conn);
-}
-
-
-// SQL query to get the total transactions of users
-$sqltra = "SELECT COUNT(*) as total_trans FROM history";
-
-// Execute the query
-$resulttra = mysqli_query($conn, $sqltra);
-
-if ($resulttra) {
-    // Fetch the result as an associative array
-    $rowtra = mysqli_fetch_assoc($resulttra);
-
-    // Get the total number of users
-    $totalTrans = $rowtra['total_trans'];
-
-    // Output the total number of users
-    
-} else {
-    // Handle the query error
-    echo "Error: " . mysqli_error($conn);
-}
-
-
-// SQL query to get the total amount where status is "completed"
-$sqlta = "SELECT SUM(amount) AS total_amount FROM payments WHERE status = 'completed' AND coin = 'USDT'";
-
-// Execute the query
-$result = mysqli_query($conn, $sqlta);
-
-if ($result) {
-    // Fetch the result as an associative array
-    $row = mysqli_fetch_assoc($result);
-
-    // Get the total amount
-    $totalAmount = $row['total_amount'];
-
-    // Output the total amount
-   
-} else {
-    // Handle the query error
-    echo "Error: " . mysqli_error($conn);
-}
-
-// SQL query to get the total amount where status is "completed"
-$sqltaB = "SELECT SUM(amount) AS total_amountB FROM payments WHERE status = 'completed' AND coin = 'BTC'";
-
-// Execute the query
-$resultB = mysqli_query($conn, $sqltaB);
-
-if ($resultB) {
-    // Fetch the result as an associative array
-    $rowB = mysqli_fetch_assoc($resultB);
-
-    // Get the total amount
-    $totalBTCAmount = $rowB['total_amountB'];
-
-    // Output the total amount
-   
-} else {
-    // Handle the query error
-    echo "Error: " . mysqli_error($conn);
-}
-
-// SQL query to get the total amount where status is "completed"
-$sqltaE = "SELECT SUM(amount) AS total_amountE FROM payments WHERE status = 'completed' AND coin = 'ETH'";
-
-// Execute the query
-$resultE = mysqli_query($conn, $sqltaE);
-
-if ($resultE) {
-    // Fetch the result as an associative array
-    $rowE = mysqli_fetch_assoc($resultE);
-
-    // Get the total amount
-    $totalETHAmount = $rowE['total_amountE'];
-
-    // Output the total amount
-   
-} else {
-    // Handle the query error
-    echo "Error: " . mysqli_error($conn);
-}
-
-// SQL query to get the total amount where status is "completed"
-$sqltaL = "SELECT SUM(amount) AS total_amountL FROM payments WHERE status = 'completed' AND coin = 'LTC'";
-
-// Execute the query
-$resultL = mysqli_query($conn, $sqltaL);
-
-if ($resultL) {
-    // Fetch the result as an associative array
-    $rowL = mysqli_fetch_assoc($resultL);
-
-    // Get the total amount
-    $totalLTCAmount = $rowL['total_amountL'];
-
-    // Output the total amount
-   
-} else {
-    // Handle the query error
-    echo "Error: " . mysqli_error($conn);
-}
-
-
-
-
-
-
-
-// Close the database connection
-mysqli_close($conn);
-?>
-<!-- Right side column. Contains the navbar and content of the page -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            Dashboard
-            <small>Control panel</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Dashboard</li>
-        </ol>
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3><?php echo $totalUsers; ?></h3>
-                        <p>Total Users</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                    <a href="users.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3>$<?php if(empty($totalAmount)){echo 0;}else{echo $totalAmount;}  ?></h3>
-                        <p>Total USDT Deposits</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3>$<?php if(empty($totalBTCAmount)){echo 0;}else{echo $totalBTCAmount;}  ?></h3>
-                        <p>Total BTC Deposits</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3>$<?php if(empty($totalETHAmount)){echo 0;}else{echo $totalETHAmount;}  ?></h3>
-                        <p>Total ETH Deposits</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3>$<?php if(empty($totalLTCAmount)){echo 0;}else{echo $totalLTCAmount;}  ?></h3>
-                        <p>Total LTC Deposits</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-red">
-                    <div class="inner">
-                        <h3><?php if(empty($totalTrans)){echo 0;}else{echo $totalTrans;} ?></h3>
-                        <p>Total Transactions</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
-                    </div>
-                    <a href="history.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-        </div><!-- /.row -->
-        <!-- Main row -->
-       
-        <div class="row">
-            <!-- Left col -->
-            <section class="col-lg-7 connectedSortable">
-                <!-- Custom tabs (Charts with tabs)-->
-
-                <!-- quick email widget -->
-                <div class="box box-info">
-                    <div class="box-header">
-                        <i class="fa fa-envelope"></i>
-                        <h3 class="box-title">Quick Email</h3>
-                        <!-- tools box -->
-                        <div class="pull-right box-tools">
-                            <button class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip"
-                                title="Remove"><i class="fa fa-times"></i></button>
-                        </div><!-- /. tools -->
-                    </div>
-                    <div class="box-body">
-                        <form action="#" method="post">
-                            <div class="form-group">
-                                <input type="email" class="form-control" name="emailto" placeholder="Email to:" />
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="subject" placeholder="Subject" />
-                            </div>
-                            <div>
-                                <textarea class="textarea" placeholder="Message"
-                                    style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="box-footer clearfix">
-                        <button class="pull-right btn btn-default" id="sendEmail">Send <i
-                                class="fa fa-arrow-circle-right"></i></button>
-                    </div>
-                </div>
-
-            </section><!-- /.Left col -->
-
-        </div><!-- /.row (main row) -->
-
-    </section><!-- /.content -->
-</div><!-- /.content-wrapper -->
 <?php
-include("includes/footer.php");
-
+  include("header.php");
 ?>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-8 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body performane-indicator-card">
+                    <div class="d-sm-flex">
+                      <h4 class="card-title flex-shrink-1">Performance Indicator</h4>
+                      <p class="m-sm-0 ms-sm-auto flex-shrink-0">
+                        <!-- <span class="data-time-range ms-0">7d</span>
+                        <span class="data-time-range active">2w</span> -->
+                        <span class="data-time-range active">1m</span>
+                        <!-- <span class="data-time-range">3m</span>
+                        <span class="data-time-range">6m</span> -->
+                      </p>
+                    </div>
+                    <div class="d-sm-flex flex-wrap mt-3">
+                      <div class="d-flex align-items-center">
+                        <span class="dot-indicator bg-primary ms-2"></span>
+                        <p class="mb-0 ms-2 text-muted font-weight-semibold">Complaints (0)</p>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <span class="dot-indicator bg-info ms-2"></span>
+                        <p class="mb-0 ms-2 text-muted font-weight-semibold"> Task Done (0)</p>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <span class="dot-indicator bg-danger ms-2"></span>
+                        <p class="mb-0 ms-2 text-muted font-weight-semibold">Attends (0)</p>
+                      </div>
+                    </div>
+                    <div class="dotted-chart-height">
+                      <canvas id="performance-indicator-chart" class="mt-5"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Sessions by channel</h4>
+                    <div class="aligner-wrapper py-3">
+                      <div class="doughnut-chart-height">
+                        <canvas id="sessionsDoughnutChart" height="210"></canvas>
+                      </div>
+                      <div class="wrapper d-flex flex-column justify-content-center absolute absolute-center">
+                        <h2 class="text-center mb-0 font-weight-bold">8.234</h2>
+                        <small class="d-block text-center text-muted  font-weight-semibold mb-0">Total Leads</small>
+                      </div>
+                    </div>
+                    <div class="wrapper mt-4 d-flex flex-wrap align-items-cente">
+                      <div class="d-flex">
+                        <span class="square-indicator bg-danger ms-2"></span>
+                        <p class="mb-0 ms-2">Assigned</p>
+                      </div>
+                      <div class="d-flex">
+                        <span class="square-indicator bg-success ms-2"></span>
+                        <p class="mb-0 ms-2">Not Assigned</p>
+                      </div>
+                      <div class="d-flex">
+                        <span class="square-indicator bg-warning ms-2"></span>
+                        <p class="mb-0 ms-2">Reassigned</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Quick Action Toolbar Starts-->
+            <div class="row quick-action-toolbar">
+              <div class="col-md-12 grid-margin">
+                <div class="card">
+                  <div class="card-header d-block d-md-flex">
+                    <h5 class="mb-0">Quick Actions</h5>
+                    <p class="ms-auto mb-0">How are your active users trending overtime?<i class="icon-bulb"></i></p>
+                  </div>
+                  <div class="d-md-flex row m-0 quick-action-btns" role="group" aria-label="Quick action buttons">
+                    <div class="col-sm-6 col-md-3 p-3 text-center btn-wrapper">
+                      <button type="button" class="btn px-0"> <i class="icon-user me-2"></i> Add Client</button>
+                    </div>
+                    <div class="col-sm-6 col-md-3 p-3 text-center btn-wrapper">
+                      <button type="button" class="btn px-0"><i class="icon-docs me-2"></i> Create Quote</button>
+                    </div>
+                    <div class="col-sm-6 col-md-3 p-3 text-center btn-wrapper">
+                      <button type="button" class="btn px-0"><i class="icon-folder me-2"></i> Enter Payment</button>
+                    </div>
+                    <div class="col-sm-6 col-md-3 p-3 text-center btn-wrapper">
+                      <button type="button" class="btn px-0"><i class="icon-book-open me-2"></i>Create Invoice</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Quick Action Toolbar Ends-->
+            <div class="row">
+              <div class="col-md-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="d-sm-flex align-items-baseline report-summary-header">
+                          <h5 class="font-weight-semibold">Report Summary</h5> <span class="ms-auto">Updated Report</span> <button class="btn btn-icons border-0 p-2"><i class="icon-refresh"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row report-inner-cards-wrapper">
+                      <div class=" col-md -6 col-xl report-inner-card">
+                        <div class="inner-card-text">
+                          <span class="report-title">EXPENSE</span>
+                          <h4>$32123</h4>
+                          <span class="report-count"> 2 Reports</span>
+                        </div>
+                        <div class="inner-card-icon bg-success">
+                          <i class="icon-rocket"></i>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-xl report-inner-card">
+                        <div class="inner-card-text">
+                          <span class="report-title">PURCHASE</span>
+                          <h4>95,458</h4>
+                          <span class="report-count"> 3 Reports</span>
+                        </div>
+                        <div class="inner-card-icon bg-danger">
+                          <i class="icon-briefcase"></i>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-xl report-inner-card">
+                        <div class="inner-card-text">
+                          <span class="report-title">QUANTITY</span>
+                          <h4>2650</h4>
+                          <span class="report-count"> 5 Reports</span>
+                        </div>
+                        <div class="inner-card-icon bg-warning">
+                          <i class="icon-globe-alt"></i>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-xl report-inner-card">
+                        <div class="inner-card-text">
+                          <span class="report-title">RETURN</span>
+                          <h4>25,542</h4>
+                          <span class="report-count"> 9 Reports</span>
+                        </div>
+                        <div class="inner-card-icon bg-primary">
+                          <i class="icon-diamond"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-sm-flex align-items-center mb-4">
+                      <h4 class="card-title mb-sm-0">Products Inventory</h4>
+                      <a href="#" class="text-dark ms-auto mb-3 mb-sm-0"> View all Products</a>
+                    </div>
+                    <div class="table-responsive border rounded p-1">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th class="font-weight-bold">Store ID</th>
+                            <th class="font-weight-bold">Amount</th>
+                            <th class="font-weight-bold">Gateway</th>
+                            <th class="font-weight-bold">Created at</th>
+                            <th class="font-weight-bold">Paid at</th>
+                            <th class="font-weight-bold">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <img class="img-sm rounded-circle" src="assets/images/faces/face1.jpg" alt="profile image"> Katie Holmes
+                            </td>
+                            <td>$3621</td>
+                            <td><img src="assets/images/dashboard/alipay.png" alt="alipay" class="gateway-icon me-2"> alipay</td>
+                            <td>04 Jun 2019</td>
+                            <td>18 Jul 2019</td>
+                            <td>
+                              <div class="badge badge-success p-2">Paid</div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <img class="img-sm rounded-circle" src="assets/images/faces/face2.jpg" alt="profile image"> Minnie Copeland
+                            </td>
+                            <td>$6245</td>
+                            <td><img src="assets/images/dashboard/paypal.png" alt="alipay" class="gateway-icon me-2"> Paypal</td>
+                            <td>25 Sep 2019</td>
+                            <td>07 Oct 2019</td>
+                            <td>
+                              <div class="badge badge-danger p-2">Pending</div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <img class="img-sm rounded-circle" src="assets/images/faces/face3.jpg" alt="profile image"> Rodney Sims
+                            </td>
+                            <td>$9265</td>
+                            <td><img src="assets/images/dashboard/alipay.png" alt="alipay" class="gateway-icon me-2"> alipay</td>
+                            <td>12 dec 2019</td>
+                            <td>26 Aug 2019</td>
+                            <td>
+                              <div class="badge badge-warning p-2">Failed</div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <img class="img-sm rounded-circle" src="assets/images/faces/face4.jpg" alt="profile image"> Carolyn Barker
+                            </td>
+                            <td>$2263</td>
+                            <td><img src="assets/images/dashboard/alipay.png" alt="alipay" class="gateway-icon me-2"> alipay</td>
+                            <td>30 Sep 2019</td>
+                            <td>20 Oct 2019</td>
+                            <td>
+                              <div class="badge badge-success p-2">Paid</div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="d-flex mt-4 flex-wrap align-items-center">
+                      <p class="text-muted mb-sm-0">Showing 1 to 10 of 57 entries</p>
+                      <nav class="ms-auto">
+                        <ul class="pagination separated pagination-info mb-sm-0">
+                          <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-left"></i></a></li>
+                          <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                          <li class="page-item"><a href="#" class="page-link">2</a></li>
+                          <li class="page-item"><a href="#" class="page-link">3</a></li>
+                          <li class="page-item"><a href="#" class="page-link">4</a></li>
+                          <li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-right"></i></a></li>
+                        </ul>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <!-- content-wrapper ends -->
+          
+          <?php
+              include("footer.php");
+          ?>
