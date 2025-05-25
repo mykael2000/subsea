@@ -40,6 +40,7 @@ if (isset($_POST['update'])) {
     } else {
         $message = "<div class='alert alert-danger'>Error updating worker.</div>";
     }
+    header('refresh:1;url=listworkers.php');
 }
 ?>
 
