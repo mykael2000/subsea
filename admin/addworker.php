@@ -102,6 +102,11 @@ mysqli_close($conn);
                                     placeholder="Enter profile">
                             </div>
                             <div class="form-group">
+                                <label for="exampleInputpos">Staff Biography</label>
+                                <textarea type="text" name="position" class="form-control" id="exampleInputpos" row="4" col="20"
+                                    ></textarea>
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputpos">Position</label>
                                 <input type="text" name="position" class="form-control" id="exampleInputpos"
                                     placeholder="Enter position">
