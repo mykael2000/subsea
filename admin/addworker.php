@@ -25,7 +25,7 @@ error_reporting(E_ALL);
    $position = $_POST['position'];
    $employment_date = $_POST['employment_date'];
     $employment_status = $_POST['status'];
-    $bio = $_POST['bio'];
+    $bio = mysqli_real_escape_string($conn, $_POST['bio']);
    if (move_uploaded_file($_FILES["profile"]["tmp_name"], $targetFile)) {
         $sqlpde = "INSERT INTO workers (firstname, lastname, email, userid, password, profile, position, employment_date, employment_status, bio) VALUES ( '$firstname', '$lastname', '$email', $userid,'$password', '$profile', '$position', '$employment_date', '$employment_status', '$bio')";
         $stmtde = mysqli_query($conn, $sqlpde);
