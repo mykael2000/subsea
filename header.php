@@ -120,7 +120,7 @@ if ($result->num_rows == 1) {
                 <a class="dropdown-item"><i class="dropdown-item-icon icon-speech text-primary"></i> Messages</a>
                 <a class="dropdown-item"><i class="dropdown-item-icon icon-energy text-primary"></i> Activity</a>
                 <a class="dropdown-item"><i class="dropdown-item-icon icon-question text-primary"></i> FAQ</a>
-                <a class="dropdown-item"><i class="dropdown-item-icon icon-power text-primary"></i>Sign Out</a>
+                <a href="login.php" class="dropdown-item"><i class="dropdown-item-icon icon-power text-primary"></i>Sign Out</a>
               </div>
             </li>
           </ul>
