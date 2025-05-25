@@ -1,3 +1,23 @@
+<?php
+
+session_start();
+ob_start();
+include("connection.php");
+if (!isset($_SESSION["userid"])) {
+    header("Location: login.php"); // Redirect to the login page if not logged in
+    exit();
+}
+// Get user information from the session
+$user_id = $_SESSION["userid"];
+
+$query = "SELECT * FROM workers WHERE id = '$user_id'";
+$result = $conn->query($query);
+
+if ($result->num_rows == 1) {
+    $user = $result->fetch_assoc();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,16 +50,16 @@
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
           <a class="navbar-brand brand-logo" href="index.html">
-            <img src="assets/images/logo.svg" alt="logo" class="logo-dark" />
-            <img src="assets/images/logo-light.svg" alt="logo-light" class="logo-light">
+            <img src="logo-white.png" alt="logo" class="logo-dark" />
+            <img src="logo-white.png" alt="logo-light" class="logo-light">
           </a>
-          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+          <a class="navbar-brand brand-logo-mini" href="index.php"><img src="logo-sh.png" alt="logo" /></a>
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="icon-menu"></span>
           </button>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center">
-          <h5 class="mb-0 font-weight-medium d-none d-lg-flex">Welcome dashboard!</h5>
+          <h5 class="mb-0 font-weight-medium d-none d-lg-flex">Welcome <?php echo $user['firstname']; ?>!</h5>
           <ul class="navbar-nav navbar-nav-right">
             <form class="search-form d-none d-md-block" action="#">
               <i class="icon-magnifier"></i>
@@ -54,17 +74,17 @@
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
                 <a class="dropdown-item py-3">
-                  <p class="mb-0 font-weight-medium float-start me-2">You have 7 unread mails </p>
+                  <p class="mb-0 font-weight-medium float-start me-2">You have 0 unread mails </p>
                   <span class="badge badge-pill badge-primary float-end">View all</span>
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
-                    <img src="assets/images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
+                    <img src="logo-sh.png" alt="image" class="img-sm profile-pic">
                   </div>
                   <div class="preview-item-content flex-grow py-2">
-                    <p class="preview-subject ellipsis font-weight-medium text-dark">Marian Garner </p>
-                    <p class="font-weight-light small-text"> The meeting is cancelled </p>
+                    <p class="preview-subject ellipsis font-weight-medium text-dark">Management Team </p>
+                    <p class="font-weight-light small-text"> Welcome on board!</p>
                   </div>
                 </a>
               </div>
@@ -89,12 +109,12 @@
             </li>
             <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
               <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                <img class="img-xs rounded-circle ms-2" src="assets/images/faces/face8.jpg" alt="Profile image"> <span class="font-weight-normal"> Henry Klein </span></a>
+                <img class="img-xs rounded-circle ms-2" src="profile/<?php echo $user['profile']; ?>" alt="Profile image"> <span class="font-weight-normal"><?php echo $user['firstname'].' '.$user['lastname']; ?></span></a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                 <div class="dropdown-header text-center">
-                  <img class="img-md rounded-circle" src="assets/images/faces/face8.jpg" alt="Profile image">
-                  <p class="mb-1 mt-3">Henry Klein</p>
-                  <p class="font-weight-light text-muted mb-0">kleinhenry@gmail.com</p>
+                  <img class="img-md rounded-circle" height='100px' width='100px' src="profile/<?php echo $user['profile']; ?>" alt="Profile image">
+                  <p class="mb-1 mt-3"><?php echo $user['firstname'].' '.$user['lastname']; ?></p>
+                  <p class="font-weight-light text-muted mb-0"><?php echo $user['email']; ?></p>
                 </div>
                 <a class="dropdown-item"><i class="dropdown-item-icon icon-user text-primary"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
                 <a class="dropdown-item"><i class="dropdown-item-icon icon-speech text-primary"></i> Messages</a>
@@ -115,17 +135,17 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item navbar-brand-mini-wrapper">
-              <a class="nav-link navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+              <a class="nav-link navbar-brand brand-logo-mini" href="index.php"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
             </li>
             <li class="nav-item nav-profile">
               <a href="#" class="nav-link">
                 <div class="profile-image">
-                  <img class="img-xs rounded-circle" src="assets/images/faces/face8.jpg" alt="profile image">
+                  <img class="img-xs rounded-circle" src="profile/<?php echo $user['profile']; ?>" alt="profile image">
                   <div class="dot-indicator bg-success"></div>
                 </div>
                 <div class="text-wrapper">
-                  <p class="profile-name">Henry Klein</p>
-                  <p class="designation">Administrator</p>
+                  <p class="profile-name"><?php echo $user['firstname'].' '.$user['lastname']; ?></p>
+                  <p class="designation"><?php echo $user['position']; ?></p>
                 </div>
                 <div class="icon-container">
                   <i class="icon-bubbles"></i>
@@ -144,26 +164,16 @@
             </li>
             <li class="nav-item nav-category"><span class="nav-link">Pages</span></li>
             <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-                <span class="menu-title">Workplace</span>
+              <a class="nav-link" href="workers.php" aria-expanded="false" aria-controls="icons">
+                <span class="menu-title">Staffs</span>
                 <i class="icon-globe menu-icon"></i>
               </a>
-              <div class="collapse" id="icons">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="settings.php">Workers List</a></li>
-                </ul>
-              </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#forms" aria-expanded="false" aria-controls="forms">
-                <span class="menu-title">Profile</span>
+              <a class="nav-link" href="tasks.php" aria-expanded="false" aria-controls="forms">
+                <span class="menu-title">Tasks</span>
                 <i class="icon-book-open menu-icon"></i>
               </a>
-              <div class="collapse" id="forms">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="profile.php">Settings</a></li>
-                </ul>
-              </div>
             </li>
             <!-- <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
