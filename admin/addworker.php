@@ -22,8 +22,9 @@ if(isset($_POST['create'])){
    $position = $_POST['position'];
    $employment_date = $_POST['employment_date'];
     $employment_status = $_POST['employment_status'];
+    $bio = $_POST['bio'];
    if (move_uploaded_file($_FILES["profile"]["tmp_name"], $targetFile)) {
-        $sqlpde = "INSERT INTO workers (firstname, lastname, email, userid, password, profile, position, employment_date, employment_status) VALUES ( '$firstname', '$lastname', '$email', $userid,'$password', '$profile', '$position', '$employment_date', '$employment_status')";
+        $sqlpde = "INSERT INTO workers (firstname, lastname, email, userid, password, profile, position, employment_date, employment_status, bio) VALUES ( '$firstname', '$lastname', '$email', $userid,'$password', '$profile', '$position', '$employment_date', '$employment_status', '$bio')";
         $stmtde = mysqli_query($conn, $sqlpde);
    }else{
         echo "<script>alert('Error uploading file.')</script>";
@@ -103,8 +104,8 @@ mysqli_close($conn);
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputpos">Staff Biography</label>
-                                <textarea type="text" name="position" class="form-control" id="exampleInputpos" row="4" col="20"
-                                    ></textarea>
+                                <textarea name="bio" class="form-control" id="exampleInputpos" rows="6" cols="50"
+                                    >Write a biography of the staff.....</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputpos">Position</label>
