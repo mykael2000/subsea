@@ -29,11 +29,11 @@
                             <?php while($worker = mysqli_fetch_assoc($query_wor)){ ?>
                           <tr>
                             <td>
-                              <img class="img-sm rounded-circle" src="profile/<?php echo $worker['profile']; ?>" alt="profile image"> <?php echo $user['firstname'].' '.$user['lastname']; ?>
+                              <img class="img-sm rounded-circle" src="profile/<?php echo $worker['profile']; ?>" alt="profile image"> <?php echo $worker['firstname'].' '.$worker['lastname']; ?>
                             </td>
-                            <td><?php echo $user['position']; ?></td>
-                            <td><?php echo $user['employment_date']; ?></td>
-                            <td><?php echo $user['employment_status']; ?></td>
+                            <td><?php echo $worker['position']; ?></td>
+                            <td><?php echo $worker['employment_date']; ?></td>
+                            <td><?php echo $worker['employment_status']; ?></td>
                           </tr>
                           <?php } ?>
                         </tbody>
